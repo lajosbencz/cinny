@@ -10,6 +10,8 @@ import { makeOpenedSidebarFolderAtom } from '../../state/openedSidebarFolder';
 import { OpenedSidebarFolderProvider } from '../../state/hooks/openedSidebarFolder';
 import { makeCallPreferencesAtom } from '../../state/callPreferences';
 import { CallPreferencesProvider } from '../../state/hooks/callPreferences';
+import { makePttSettingsAtom } from '../../state/pttSettings';
+import { PttSettingsProvider } from '../../state/hooks/pttSettings';
 
 type ClientInitStorageAtomProps = {
   children: ReactNode;
@@ -28,13 +30,15 @@ export function ClientInitStorageAtom({ children }: ClientInitStorageAtomProps) 
 
   const callPreferencesAtom = useMemo(() => makeCallPreferencesAtom(userId), [userId]);
 
+  const pttSettingsAtom = useMemo(() => makePttSettingsAtom(userId), [userId]);
+
   return (
     <ClosedNavCategoriesProvider value={closedNavCategoriesAtom}>
       <ClosedLobbyCategoriesProvider value={closedLobbyCategoriesAtom}>
         <NavToActivePathProvider value={navToActivePathAtom}>
           <OpenedSidebarFolderProvider value={openedSidebarFolderAtom}>
             <CallPreferencesProvider value={callPreferencesAtom}>
-              {children}
+              <PttSettingsProvider value={pttSettingsAtom}>{children}</PttSettingsProvider>
             </CallPreferencesProvider>
           </OpenedSidebarFolderProvider>
         </NavToActivePathProvider>

@@ -25,6 +25,7 @@ import {
 } from './types';
 import { CallControl } from './CallControl';
 import { CallControlState } from './CallControlState';
+import { PttAudioGate } from '../ptt';
 
 export class CallEmbed {
   private mx: MatrixClient;
@@ -38,6 +39,8 @@ export class CallEmbed {
   public joined = false;
 
   public readonly control: CallControl;
+
+  public readonly pttAudioGate: PttAudioGate;
 
   private readonly container: HTMLElement;
 
@@ -170,6 +173,13 @@ export class CallEmbed {
     this.iframe = iframe;
     this.container = container;
 
+    this.pttAudioGate = new PttAudioGate();
+    iframe.addEventListener('load', () => {
+      if (iframe.contentWindow) {
+        this.pttAudioGate.install(iframe.contentWindow);
+      }
+    });
+
     const controlState = initialControlState ?? new CallControlState(true, false, true);
     this.control = new CallControl(controlState, call, iframe);
 
@@ -259,6 +269,7 @@ export class CallEmbed {
     this.call.stop();
     this.container.removeChild(this.iframe);
     this.control.dispose();
+    this.pttAudioGate.dispose();
 
     this.mx.off(ClientEvent.Event, this.onEvent.bind(this));
     this.mx.off(MatrixEventEvent.Decrypted, this.onEventDecrypted.bind(this));

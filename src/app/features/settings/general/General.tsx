@@ -50,6 +50,7 @@ import { useMessageLayoutItems } from '../../../hooks/useMessageLayout';
 import { useMessageSpacingItems } from '../../../hooks/useMessageSpacing';
 import { useDateFormatItems } from '../../../hooks/useDateFormat';
 import { SequenceCardStyle } from '../styles.css';
+import { PushToTalk } from './PushToTalk';
 
 type ThemeSelectorProps = {
   themeNames: Record<string, string>;
@@ -1005,6 +1006,7 @@ export function General({ requestClose }: GeneralProps) {
               <Appearance />
               <DateAndTime />
               <Editor />
+              {!!window.__TAURI_INTERNALS__ && <PushToTalk />}
               <Messages />
             </Box>
           </PageContent>
