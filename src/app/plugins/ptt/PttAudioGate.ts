@@ -57,12 +57,12 @@ export class PttAudioGate {
     };
   }
 
-  /** Enable PTT gating — silence the mic */
-  enable(): void {
+  /** Enable PTT gating — set initial mic state based on mode */
+  enable(inverse = false): void {
     this.active = true;
     this.audioCtx?.resume();
     if (this.gainNode) {
-      this.gainNode.gain.value = 0;
+      this.gainNode.gain.value = inverse ? 1 : 0;
     }
   }
 

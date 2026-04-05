@@ -27,11 +27,12 @@ export function usePtt(embed: CallEmbed): void {
     const engine = engineRef.current;
     if (!engine) return undefined;
 
-    const { enabled, shortcut } = pttSettings;
+    const { enabled, shortcut, inverse } = pttSettings;
 
     if (enabled && shortcut && embed.joined) {
       engine.setGate(embed.pttAudioGate);
-      embed.pttAudioGate.enable();
+      engine.setInverse(inverse);
+      embed.pttAudioGate.enable(inverse);
       engine.start(shortcut);
     } else {
       embed.pttAudioGate.disable();

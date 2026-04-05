@@ -172,6 +172,13 @@ export function PushToTalk() {
     [pttSettings, setPttSettings]
   );
 
+  const handleInverse = useCallback(
+    (inverse: boolean) => {
+      setPttSettings({ ...pttSettings, inverse });
+    },
+    [pttSettings, setPttSettings]
+  );
+
   const handleCapture = useCallback(
     (binding: string) => {
       setPttSettings({ ...pttSettings, shortcut: binding });
@@ -196,6 +203,20 @@ export function PushToTalk() {
               value={pttSettings.enabled}
               onChange={handleToggle}
               disabled={!pttSettings.shortcut}
+            />
+          }
+        />
+      </SequenceCard>
+      <SequenceCard className={SequenceCardStyle} variant="SurfaceVariant" direction="Column">
+        <SettingTile
+          title="Push to Mute"
+          description="Invert behavior — hold to mute instead of unmute"
+          after={
+            <Switch
+              variant="Primary"
+              value={pttSettings.inverse}
+              onChange={handleInverse}
+              disabled={!pttSettings.enabled}
             />
           }
         />

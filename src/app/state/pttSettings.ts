@@ -8,6 +8,7 @@ import {
 export type PttSettings = {
   enabled: boolean;
   shortcut: string | null;
+  inverse: boolean;
 };
 
 const PTT_SETTINGS = 'pttSettings';
@@ -15,6 +16,7 @@ const PTT_SETTINGS = 'pttSettings';
 const DEFAULT_SETTINGS: PttSettings = {
   enabled: false,
   shortcut: null,
+  inverse: false,
 };
 
 export type PttSettingsAtom = WritableAtom<PttSettings, [PttSettings], undefined>;

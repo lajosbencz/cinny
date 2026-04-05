@@ -18,8 +18,14 @@ export class PttEngine {
 
   private safetyTimer: ReturnType<typeof setTimeout> | null = null;
 
+  private inverse = false;
+
   setGate(gate: PttAudioGate | null): void {
     this.gate = gate;
+  }
+
+  setInverse(inverse: boolean): void {
+    this.inverse = inverse;
   }
 
   async start(binding: string): Promise<void> {
@@ -63,7 +69,9 @@ export class PttEngine {
   private onPttEvent(pressed: boolean): void {
     if (!this.gate) return;
 
-    if (pressed) {
+    const effective = this.inverse ? !pressed : pressed;
+
+    if (effective) {
       this.gate.press();
       this.startSafetyTimer();
     } else {
